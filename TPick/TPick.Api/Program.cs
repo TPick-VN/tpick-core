@@ -1,3 +1,4 @@
+using System.Net;
 using CsMicro;
 using CsMicro.InversionOfControl;
 using TPick.App.Services;
@@ -32,7 +33,6 @@ app.UseCors(options =>
     options.AllowAnyHeader();
 });
 app.UseCsMicro();
-app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

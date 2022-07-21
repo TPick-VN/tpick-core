@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\CsMicro\src\CsMicro.Cqrs\CsMicro.Cqrs.csproj" />
-      <ProjectReference Include="..\..\CsMicro\src\CsMicro.Persistence\CsMicro.Persistence.EfCore\CsMicro.Persistence.EfCore.csproj" />
+      <ProjectReference Include="..\..\csmicro\src\CsMicro.Cqrs\CsMicro.Cqrs.csproj" />
+      <ProjectReference Include="..\..\csmicro\src\CsMicro.Persistence\CsMicro.Persistence.EfCore\CsMicro.Persistence.EfCore.csproj" />
       <ProjectReference Include="..\TPick.Domain\TPick.Domain.csproj" />
     </ItemGroup>
 
