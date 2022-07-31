@@ -1,6 +1,17 @@
 name: Test
 
 on:
+  workflow_dispatch:
+    inputs:
+      input-a:
+        description: 'Input a'     
+        required: true
+        default: 'A' 
+        type: choice
+        options:
+        - A
+        - B
+        - C 
   push:
     branches: [ "main" ]
   pull_request:
