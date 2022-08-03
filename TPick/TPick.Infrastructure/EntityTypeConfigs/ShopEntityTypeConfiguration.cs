@@ -13,8 +13,8 @@ public class ShopEntityTypeConfiguration : IEntityTypeConfiguration<Shop>
         builder.HasIndex(x => x.Url);
         builder.Property(x => x.Url);
         builder.Property(x => x.Name);
-        builder.Property(x => x.Address).IsRequired(false);
-        builder.Property(x => x.ImageUrl).IsRequired(false);
+        builder.Property(x => x.Address);
+        builder.Property(x => x.ImageUrl);
         builder.Property(x => x.UpdatedTime);
         builder.Property(x => x.Sections)
             .HasConversion(v => JsonConvert.SerializeObject(v),
