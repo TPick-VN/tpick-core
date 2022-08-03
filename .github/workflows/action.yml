@@ -18,8 +18,13 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
-#     runs-on: ubuntu-latest
-    runs-on: self-hosted
+  docker:
+    name: Build and Push to Docker Hub
+    runs-on: ubuntu-latest
     steps:
-      - uses: tpick-vn/tpick-actions/keyvault@v1
+      - uses: tpick-vn/tpick-actions/docker@v1
+        with: 
+          image-name: tpick-core
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
+
