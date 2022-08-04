@@ -41,6 +41,7 @@ public class GetOrderDetailsQueryHandler : IQueryHandler<GetOrderDetailsQuery, O
             ShopId = order.ShopId,
             Fee = order.Fee,
             Discount = order.Discount,
+            IsConfirm = order.IsConfirm,
             SubOrders = subOrders,
         };
     }
@@ -53,5 +54,6 @@ public class OrderDetails
     public User Host { get; set; } = null!;
     public JObject Fee { get; set; } = new();
     public JObject Discount { get; set; } = new();
+    public bool IsConfirm { get; set; }
     public List<SubOrder> SubOrders { get; set; } = null!;
 }
