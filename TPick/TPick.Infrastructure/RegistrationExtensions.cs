@@ -1,6 +1,9 @@
 ﻿using CsMicro;
 using CsMicro.Core;
 using CsMicro.Cqrs;
+using CsMicro.IntegrationEvent;
+using CsMicro.Messaging;
+using CsMicro.Messaging.Redis;
 using CsMicro.Persistence;
 using CsMicro.Persistence.EfCore;
 
@@ -13,6 +16,8 @@ public static class RegistrationExtensions
         return builder
             .AddCore()
             .AddCqrs("TPick.App")
+            .AddEventPublisher()
+            .AddMessaging(o => { o.UseRedis(); })            
             .AddPersistence(o => { o.UseEfCore(); });
     }
 }

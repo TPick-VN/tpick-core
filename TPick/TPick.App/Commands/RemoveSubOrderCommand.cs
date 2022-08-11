@@ -1,7 +1,9 @@
 ﻿using CsMicro.Cqrs.Commands;
+using CsMicro.IntegrationEvent;
 using CsMicro.Persistence;
 using Microsoft.EntityFrameworkCore;
 using TPick.Domain.Aggregates;
+using TPick.Domain.IntegrationEvents;
 using TPick.Domain.ValueObjects;
 
 namespace TPick.App.Commands;
@@ -15,10 +17,12 @@ public class RemoveSubOrderCommand : ICommand
 public class RemoveSubOrderCommandHandler : ICommandHandler<RemoveSubOrderCommand>
 {
     private readonly IGenericRepository<SubOrder, Guid> _subOrderRepo;
+    private readonly IEventPublisher _eventPublisher;
 
-    public RemoveSubOrderCommandHandler(IGenericRepository<SubOrder, Guid> subOrderRepo)
+    public RemoveSubOrderCommandHandler(IGenericRepository<SubOrder, Guid> subOrderRepo, IEventPublisher eventPublisher)
     {
         _subOrderRepo = subOrderRepo;
+        _eventPublisher = eventPublisher;
     }
 
     public async Task<CommandResult> HandleAsync(RemoveSubOrderCommand command, CancellationToken cancellationToken)
@@ -26,10 +30,17 @@ public class RemoveSubOrderCommandHandler : ICommandHandler<RemoveSubOrderComman
         var currentSubOrder = await _subOrderRepo.FindOneAsync(
             x => x.OrderId == command.OrderId && x.Owner.Id == command.OwnerId,
             cancellationToken: cancellationToken);
-        if (currentSubOrder is not null)
+        if (currentSubOrder is null) return CommandResult.Success();
+
+        await _subOrderRepo.DeleteAsync(currentSubOrder.Id, cancellationToken);
+        
+        var @event = new SubOrderRemovedEvent()
         {
-            await _subOrderRepo.DeleteAsync(currentSubOrder.Id, cancellationToken);
-        }
+            OrderId = currentSubOrder.OrderId,
+            SubOrderId = currentSubOrder.Id,
+            Owner = currentSubOrder.Owner,
+        };
+        await _eventPublisher.PublishAsync(@event, cancellationToken);
 
         return CommandResult.Success();
     }
