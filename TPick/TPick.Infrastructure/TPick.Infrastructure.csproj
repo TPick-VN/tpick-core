@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\csmicro\src\CsMicro.Cqrs\CsMicro.Cqrs.csproj" />
+      <ProjectReference Include="..\..\CsMicro\src\CsMicro.Cqrs\CsMicro.Cqrs.csproj" />
       <ProjectReference Include="..\..\CsMicro\src\CsMicro.Event\CsMicro.IntegrationEvent.Plugins\CsMicro.IntegrationEvent.Plugins.csproj" />
       <ProjectReference Include="..\..\CsMicro\src\CsMicro.Messaging\CsMicro.Messaging.Kafka\CsMicro.Messaging.Kafka.csproj" />
-      <ProjectReference Include="..\..\csmicro\src\CsMicro.Messaging\CsMicro.Messaging.Redis\CsMicro.Messaging.Redis.csproj" />
-      <ProjectReference Include="..\..\csmicro\src\CsMicro.Persistence\CsMicro.Persistence.EfCore\CsMicro.Persistence.EfCore.csproj" />
+      <ProjectReference Include="..\..\CsMicro\src\CsMicro.Messaging\CsMicro.Messaging.Redis\CsMicro.Messaging.Redis.csproj" />
+      <ProjectReference Include="..\..\CsMicro\src\CsMicro.Persistence\CsMicro.Persistence.EfCore\CsMicro.Persistence.EfCore.csproj" />
       <ProjectReference Include="..\TPick.Domain\TPick.Domain.csproj" />
     </ItemGroup>
 

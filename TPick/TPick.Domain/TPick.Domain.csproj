@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\csmicro\src\CsMicro.Core\CsMicro.Core.csproj" />
+      <ProjectReference Include="..\..\CsMicro\src\CsMicro.Core\CsMicro.Core.csproj" />
       <ProjectReference Include="..\..\CsMicro\src\CsMicro.Event\CsMicro.IntegrationEvent\CsMicro.IntegrationEvent.csproj" />
     </ItemGroup>
 

@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPick.Infrastructure", "TPi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPick.Api", "TPick\TPick.Api\TPick.Api.csproj", "{D3A425DA-1A85-4B7B-B74A-3DE5F40D871B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsMicro.Messaging.Redis", "csmicro\src\CsMicro.Messaging\CsMicro.Messaging.Redis\CsMicro.Messaging.Redis.csproj", "{64D7AC92-B459-4B90-AEED-5F19704FE5CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsMicro.Messaging.Redis", "CsMicro\src\CsMicro.Messaging\CsMicro.Messaging.Redis\CsMicro.Messaging.Redis.csproj", "{64D7AC92-B459-4B90-AEED-5F19704FE5CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
