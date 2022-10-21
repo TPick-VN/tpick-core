@@ -7,7 +7,7 @@ public class SubOrder : AggregateRoot<Guid>
 {
     public override Guid Id { get; init; } = Guid.NewGuid();
     public Guid OrderId { get; }
-    public User Owner { get; } = null!;
+    public SubOrderOwner Owner { get; } = null!;
     public string? Note { get; }
     public List<OrderItem> Items { get; }
 
@@ -15,7 +15,7 @@ public class SubOrder : AggregateRoot<Guid>
     {
     }
 
-    public SubOrder(Guid orderId, User owner, string? note, List<OrderItem> items)
+    public SubOrder(Guid orderId, SubOrderOwner owner, string? note, List<OrderItem> items)
     {
         OrderId = orderId;
         Owner = owner;

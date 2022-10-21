@@ -10,7 +10,7 @@ namespace TPick.App.Commands;
 public class SubmitSubOrderCommand : ICommand
 {
     public Guid OrderId { get; set; }
-    public User Owner { get; init; }
+    public SubOrderOwner Owner { get; init; }
     public string? Note { get; init; }
     public List<SubOrder.OrderItem> Items { get; init; } = new();
 }

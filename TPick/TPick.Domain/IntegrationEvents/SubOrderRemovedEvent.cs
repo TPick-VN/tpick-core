@@ -9,5 +9,5 @@ public class SubOrderRemovedEvent : IIntegrationEvent
 {
     public Guid OrderId { get; set; }
     public Guid SubOrderId { get; set; }
-    public User Owner { get; set; } = null!;
+    public SubOrderOwner Owner { get; set; } = null!;
 }

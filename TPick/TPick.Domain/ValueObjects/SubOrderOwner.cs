@@ -3,27 +3,24 @@ using CsMicro.Core;
 
 namespace TPick.Domain.ValueObjects;
 
-public class User : ValueObject
+public class SubOrderOwner : ValueObject
 {
     public Guid Id { get; }
     public string Name { get; set; } = null!;
-    public string? Momo { get; set; } = null!;
 
-    private User()
+    private SubOrderOwner()
     {
     }
 
-    public User(Guid id, string name, string? momo)
+    public SubOrderOwner(Guid id, string name)
     {
         Id = id;
         Name = name;
-        Momo = momo;
     }
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Id;
         yield return Name;
-        if (Momo is not null) yield return Momo;
     }
 }

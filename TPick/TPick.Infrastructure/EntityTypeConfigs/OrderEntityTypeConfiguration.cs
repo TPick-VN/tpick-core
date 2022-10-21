@@ -14,6 +14,7 @@ public class OrderEntityTypeConfiguration : IEntityTypeConfiguration<Order>
         builder.OwnsOne(own => own.Host, value => {
             value.Property(p => p.Id).HasColumnName("HostId");
             value.Property(p => p.Name).HasColumnName("HostName");
+            value.Property(p => p.Momo).HasColumnName("HostMomo");
         });
         builder.Property(x => x.Fee).HasConversion(
             to => to.ToString(),
