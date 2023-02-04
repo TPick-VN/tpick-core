@@ -1,6 +1,5 @@
 ﻿using CsMicro.Cqrs.Queries;
 using CsMicro.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using TPick.Domain.Aggregates;
 using TPick.Domain.ValueObjects;

@@ -1,11 +1,8 @@
 using CsMicro.Cqrs.Commands;
 using CsMicro.Cqrs.Queries;
-using CsMicro.Persistence.EfCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TPick.App.Commands;
 using TPick.App.Queries;
-using TPick.Domain.Aggregates;
 
 namespace TPick.Api.Controllers;
 
@@ -45,12 +42,37 @@ public class OrderController : ControllerBase
 
         return result is null ? NotFound() : Ok(result);
     }
+    
+    [HttpGet]
+    [Route("{orderId:guid}/meta-page")]
+    public async Task<IActionResult> GetOrderMetaPage([FromRoute] Guid orderId, CancellationToken cancellationToken)
+    {
+        var result = await _queryBus.SendAsync(new GetOrderMetaPageQuery()
+        {
+            OrderId = orderId
+        }, cancellationToken);
+
+        return result is null ? NotFound() : new ContentResult()
+        {
+            Content = result,
+            ContentType = "text/html"
+        };
+    }
 
     [HttpPatch]
     [Route("{orderId:guid}/confirmation")]
-    public async Task<IActionResult> PatchOrder([FromRoute] Guid orderId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Confirmation([FromRoute] Guid orderId, CancellationToken cancellationToken)
     {
         var result = await _commandBus.SendAsync(new ConfirmOrderCommand() {OrderId = orderId}, cancellationToken);
+
+        return result.IsSuccess ? Ok() : BadRequest();
+    }
+    
+    [HttpPatch]
+    [Route("{orderId:guid}/revert-confirmation")]
+    public async Task<IActionResult> RevertConfirmation([FromRoute] Guid orderId, CancellationToken cancellationToken)
+    {
+        var result = await _commandBus.SendAsync(new RevertOrderConfirmationCommand() {OrderId = orderId}, cancellationToken);
 
         return result.IsSuccess ? Ok() : BadRequest();
     }

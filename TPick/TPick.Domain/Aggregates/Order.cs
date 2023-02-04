@@ -27,6 +27,12 @@ public class Order : AggregateRoot<Guid>
     {
         IsConfirm = true;
     }
+    
+    public void Revert()
+    {
+        IsConfirm = false;
+    }
+    
     public void SetDetails(JObject fee, JObject discount)
     {
         Fee = fee;

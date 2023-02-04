@@ -20,22 +20,22 @@ public class SubmitSubOrderCommandHandler : ICommandHandler<SubmitSubOrderComman
     private readonly IGenericRepository<Order, Guid> _orderRepo;
     private readonly IGenericRepository<SubOrder, Guid> _subOrderRepo;
     private readonly IEventPublisher _eventPublisher;
+    private readonly IIdempotentExecutor _idempotentExecutor;
 
     public SubmitSubOrderCommandHandler(IGenericRepository<Order, Guid> orderRepo,
-        IGenericRepository<SubOrder, Guid> subOrderRepo, IEventPublisher eventPublisher)
+        IGenericRepository<SubOrder, Guid> subOrderRepo, IEventPublisher eventPublisher,
+        IIdempotentExecutor idempotentExecutor)
     {
         _orderRepo = orderRepo;
         _subOrderRepo = subOrderRepo;
         _eventPublisher = eventPublisher;
+        _idempotentExecutor = idempotentExecutor;
     }
 
     public async Task<CommandResult> HandleAsync(SubmitSubOrderCommand command, CancellationToken cancellationToken)
     {
         var order = await _orderRepo.FindOneAsync(command.OrderId, cancellationToken);
-        if (order is null)
-        {
-            return CommandResult.Error("Order is not valid!");
-        }
+        if (order is null) return CommandResult.Error("Order is not valid!");
 
         var currentSubOrder = await _subOrderRepo.FindOneAsync(
             x => x.OrderId == command.OrderId && x.Owner.Id == command.Owner.Id,
@@ -46,6 +46,9 @@ public class SubmitSubOrderCommandHandler : ICommandHandler<SubmitSubOrderComman
         }
 
         var subOrder = new SubOrder(command.OrderId, command.Owner, command.Note, command.Items);
+        var idempotentKey = $"SubmitSubOrder_OrderId_{subOrder.OrderId}_Owner_{subOrder.Owner.Id}";
+        _idempotentExecutor.Setup(idempotentKey, TimeSpan.FromSeconds(5));
+        
         await _subOrderRepo.AddAsync(subOrder, cancellationToken);
 
         var @event = new SubOrderSubmittedEvent()

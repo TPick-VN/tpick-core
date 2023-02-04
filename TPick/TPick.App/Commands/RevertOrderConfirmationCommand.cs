@@ -6,18 +6,18 @@ using TPick.Domain.IntegrationEvents;
 
 namespace TPick.App.Commands;
 
-public class ConfirmOrderCommand : ICommand
+public class RevertOrderConfirmationCommand : ICommand
 {
     public Guid OrderId { get; init; }
 }
 
-public class ConfirmOrderCommandHandler : ICommandHandler<ConfirmOrderCommand>
+public class RevertOrderConfirmationCommandHandler : ICommandHandler<RevertOrderConfirmationCommand>
 {
     private readonly IGenericRepository<Order, Guid> _orderRepo;
     private readonly IEventPublisher _eventPublisher;
     private readonly IIdempotentExecutor _idempotentExecutor;
 
-    public ConfirmOrderCommandHandler(IGenericRepository<Order, Guid> orderRepo, IEventPublisher eventPublisher,
+    public RevertOrderConfirmationCommandHandler(IGenericRepository<Order, Guid> orderRepo, IEventPublisher eventPublisher,
         IIdempotentExecutor idempotentExecutor)
     {
         _orderRepo = orderRepo;
@@ -25,19 +25,19 @@ public class ConfirmOrderCommandHandler : ICommandHandler<ConfirmOrderCommand>
         _idempotentExecutor = idempotentExecutor;
     }
 
-    public async Task<CommandResult> HandleAsync(ConfirmOrderCommand command, CancellationToken cancellationToken)
+    public async Task<CommandResult> HandleAsync(RevertOrderConfirmationCommand command, CancellationToken cancellationToken)
     {
         var order = await _orderRepo.FindOneAsync(command.OrderId, cancellationToken);
         if (order is null) return CommandResult.Error("Order is not valid!");
 
-        if (order.IsConfirm) return CommandResult.Success();
+        if (!order.IsConfirm) return CommandResult.Success();
 
-        var idempotentKey = $"ConfirmOrder_OrderId_{order.Id}";
+        var idempotentKey = $"RevertOrderConfirmation_OrderId_{order.Id}";
         _idempotentExecutor.Setup(idempotentKey, TimeSpan.FromSeconds(5));
-        order.Confirm();
+        order.Revert();
         await _orderRepo.SaveAsync(order, cancellationToken);
 
-        var @event = new OrderConfirmedEvent()
+        var @event = new OrderConfirmationRevertedEvent()
         {
             OrderId = order.Id
         };

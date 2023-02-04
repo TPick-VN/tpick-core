@@ -1,10 +1,8 @@
 ﻿using CsMicro.Cqrs.Commands;
 using CsMicro.IntegrationEvent;
 using CsMicro.Persistence;
-using Microsoft.EntityFrameworkCore;
 using TPick.Domain.Aggregates;
 using TPick.Domain.IntegrationEvents;
-using TPick.Domain.ValueObjects;
 
 namespace TPick.App.Commands;
 

@@ -10,4 +10,11 @@
       <ProjectReference Include="..\TPick.Infrastructure\TPick.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Assets\MetaPage.html" />
+      <EmbeddedResource Include="Assets\MetaPage.html">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

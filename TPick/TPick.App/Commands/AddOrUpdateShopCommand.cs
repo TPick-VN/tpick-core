@@ -2,7 +2,6 @@
 using CsMicro.Cqrs.Commands;
 using CsMicro.Persistence;
 using CsMicro.Utilities;
-using Microsoft.EntityFrameworkCore;
 using TPick.App.Services;
 using TPick.Domain.Aggregates;
 

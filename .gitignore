@@ -364,3 +364,5 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea
+
+appsettings.lprod.json
